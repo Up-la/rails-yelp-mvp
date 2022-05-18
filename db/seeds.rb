@@ -8,6 +8,8 @@
 
 require 'faker'
 
+Restaurant.destroy_all
+
 5.times do
   restaurant = Restaurant.new(
     name: Faker::Restaurant.name,
@@ -16,4 +18,12 @@ require 'faker'
     category: %w[chinese italian japanese french belgian].sample
   )
   restaurant.save
+  (1..5).to_a.sample.times do
+    review = Review.new(
+      content: Faker::TvShows::RickAndMorty.quote,
+      rating: (1..5).to_a.sample,
+      restaurant_id: restaurant.id
+    )
+    review.save
+  end
 end
